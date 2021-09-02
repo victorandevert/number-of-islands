@@ -7,12 +7,12 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 @TestInstance(PER_CLASS)
-class WorldShould {
+class MapShould {
 
     @ParameterizedTest
     @MethodSource("grids")
     fun `find islands`(grid: Array<CharArray>, islands: Int) {
-        assertThat(`number of islands`(grid)).isEqualTo(islands)
+        assertThat(numberOfIslands(grid)).isEqualTo(islands)
     }
 
     private fun grids(): Stream<Arguments> {
@@ -45,6 +45,11 @@ class WorldShould {
                 charArrayOf('1','0','0','0','0'),
                 charArrayOf('0','0','1','0','0'),
                 charArrayOf('0','0','0','1','1')), 4),
+            Arguments.of(arrayOf(
+                charArrayOf('1','0','1','1','0'),
+                charArrayOf('1','0','0'),
+                charArrayOf('0','0','1','1'),
+                charArrayOf('1','0','0','1','1')), 4)
         )
     }
 }
