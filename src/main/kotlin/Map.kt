@@ -16,24 +16,21 @@ fun `number of islands`(grid: Array<CharArray>):Int {
 }
 
 fun inspectNode(row: Int, column: Int, grid: Array<CharArray>, visitedNodes: Array<CharArray>, islands: Int): Int {
+    Position.values().forEach {
+        val newRow = it.row + row
+        val newColumn = it.column + column
+        if (newRow >= 0 && newColumn >= 0 && newRow < grid.size && newColumn < grid[row].size && grid[newRow][newColumn] == '1' && visitedNodes[newRow][newColumn] != '1') {
+            visitedNodes[newRow][newColumn] = '1'
+            inspectNode(newRow, newColumn, grid, visitedNodes, islands)
+        }
+    }.also {
+        return islands + 1
+    }
+}
 
-    if (row+1<grid.size && grid[row+1][column]=='1' && visitedNodes[row+1][column] != '1') {
-        visitedNodes[row+1][column]='1'
-        inspectNode(row+1, column, grid, visitedNodes, islands)
-    }
-    if (column+1<grid[row].size && grid[row][column+1]=='1' && visitedNodes[row][column+1] != '1') {
-        visitedNodes[row][column+1]='1'
-        inspectNode(row, column+1, grid, visitedNodes, islands)
-    }
-    if (row-1>=0 && grid[row-1][column]=='1' && visitedNodes[row-1][column] != '1') {
-        visitedNodes[row-1][column]='1'
-        inspectNode(row-1, column, grid, visitedNodes, islands)
-    }
-    if (column-1>=0 && grid[row][column-1]=='1' && visitedNodes[row][column-1] != '1') {
-        visitedNodes[row][column-1]='1'
-        inspectNode(row, column-1, grid, visitedNodes, islands)
-    }
-
-   return islands+1
-
+enum class Position(val row: Int, val column: Int){
+    UP(-1,0),
+    DOWN(1, 0),
+    RIGHT(0,1),
+    LEFT(0,-1)
 }
