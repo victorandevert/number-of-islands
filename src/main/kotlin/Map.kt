@@ -19,8 +19,8 @@ fun inspectNode(row: Int, column: Int, grid: Array<CharArray>, visitedNodes: Arr
     Position.values().forEach {
         val newRow = it.row + row
         val newColumn = it.column + column
-        if (newRow >= 0 && newColumn >= 0 && newRow < grid.size && newColumn < grid[row].size && grid[newRow][newColumn] == '1' && visitedNodes[newRow][newColumn] != '1') {
-            visitedNodes[newRow][newColumn] = '1'
+        if (isNeighbor(newRow, newColumn, grid, row, visitedNodes)) {
+            visitedNodes[newRow][newColumn]='1'
             inspectNode(newRow, newColumn, grid, visitedNodes, islands)
         }
     }.also {
@@ -28,6 +28,14 @@ fun inspectNode(row: Int, column: Int, grid: Array<CharArray>, visitedNodes: Arr
     }
 }
 
+private fun isNeighbor(
+    newRow: Int,
+    newColumn: Int,
+    grid: Array<CharArray>,
+    row: Int,
+    visitedNodes: Array<CharArray>
+) =
+    newRow >= 0 && newColumn >= 0 && newRow < grid.size && newColumn < grid[row].size && grid[newRow][newColumn] == '1' && visitedNodes[newRow][newColumn] != '1'
 enum class Position(val row: Int, val column: Int){
     UP(-1,0),
     DOWN(1, 0),
